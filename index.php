@@ -35,7 +35,7 @@
         <main class="container">
             <ul class="list-group">
                 <li class="list-group-item d-flex justify-content-between " v-for="(todo,index) in filteredTodo" :key="todo.id">
-                    <span :class="{'text-decoration-line-through text-secondary' : todo.done}" role="button" @click="ToDoComplete(todo.id)">
+                    <span :class="{'text-decoration-line-through text-secondary' : todo.done}" role="button" @click="ToDoComplete(index)">
                         {{todo.text}}
                     </span>
                     <i class="fa-solid fa-trash p-2" @click="removeItem(index)" role="button"></i>

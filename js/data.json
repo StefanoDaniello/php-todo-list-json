@@ -2,16 +2,16 @@
     {
         "id": 1,
         "text": "Costume da bagno",
-        "done": false
+        "done": true
     },
     {
         "id": 2,
         "text": "Carta di credito",
-        "done": false
+        "done": true
     },
     {
         "id": 3,
         "text": "Paletta e secchiello",
-        "done": false
+        "done": true
     }
 ]

@@ -22,6 +22,13 @@ if($method === 'POST'){
     array_splice($task, $index, 1);
     $toDoJson = json_encode($task , JSON_PRETTY_PRINT);
     file_put_contents('js/data.json',$toDoJson);
+}elseif($method === 'PUT'){
+    $task = json_decode($toDoJson,true);
+    $obj = json_decode(file_get_contents('php://input'), true);
+    $index = $obj['idx'];
+    $task[$index]['done'] = !$task[$index]['done'];
+    $toDoJson = json_encode($task , JSON_PRETTY_PRINT);
+    file_put_contents('js/data.json',$toDoJson);
 }
 
 

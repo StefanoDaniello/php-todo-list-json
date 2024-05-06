@@ -15,7 +15,7 @@ createApp({
                 done: false
             },
             apiUrl:'server.php',
-            lastId: 0,
+            lastId: null,
 
         }
     },
@@ -30,9 +30,13 @@ createApp({
                 console.log(err)
             })
         },
-        ToDoComplete(id) {
-            const task = this.originalTodo.find(task => task.id === id);
-            task.done = !task.done;
+        ToDoComplete(index) {
+            const data = this.originalTodo[index];
+            data.idx = index;
+            axios.put(this.apiUrl, data).then((res) => {
+                this.originalTodo = res.data;
+                this.lastId = this.originalTodo.length - 1;
+            })
         },
         removeItem(index) {
             const data = {
