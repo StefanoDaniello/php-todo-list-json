@@ -15,7 +15,7 @@ createApp({
                 done: false
             },
             apiUrl:'server.php',
-            lastId: null,
+            lastId: 0,
 
         }
     },
@@ -34,16 +34,14 @@ createApp({
             const task = this.originalTodo.find(task => task.id === id);
             task.done = !task.done;
         },
-        removeItem(id) {
-            const index = this.originalTodo.findIndex(task => task.id === id);
-            if (index !== -1) {
-                this.originalTodo.splice(index, 1);
-                // Effettua la stessa operazione sulla lista originale
-                const originalIndex = this.originalTodo.findIndex(task => task.id === id);
-                if (originalIndex !== -1) {
-                    this.originalTodo.splice(originalIndex, 1);
-                }
-            }
+        removeItem(index) {
+            const data = {
+                id: index,
+            };
+            axios.delete(this.apiUrl, {data}).then((res) => {
+                this.originalTodo = res.data;
+                this.lastId = this.originalTodo.length - 1;
+            });
         },
         addItem() {
             const task ={...this.newTask};

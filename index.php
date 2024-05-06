@@ -38,7 +38,7 @@
                     <span :class="{'text-decoration-line-through text-secondary' : todo.done}" role="button" @click="ToDoComplete(todo.id)">
                         {{todo.text}}
                     </span>
-                    <i class="fa-solid fa-trash p-2" @click="removeItem(todo.id)" role="button"></i>
+                    <i class="fa-solid fa-trash p-2" @click="removeItem(index)" role="button"></i>
                 </li>
             </ul>
             
