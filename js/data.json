@@ -15,8 +15,13 @@
         "done": false
     },
     {
+        "id": 3,
+        "text": "2",
+        "done": false
+    },
+    {
         "id": 4,
-        "text": "Crema solare",
+        "text": "3",
         "done": false
     }
 ]

@@ -9,7 +9,14 @@ createApp({
             newTodo: '',
             searchQuery: '',
             done: '',
+            newTask : {
+                id: '',
+                text: '',
+                done: false
+            },
             apiUrl:'server.php',
+            lastId: null,
+
         }
     },
     methods: {
@@ -17,7 +24,10 @@ createApp({
             axios.get(this.apiUrl).then((res)=>{
                 this.originalTodo = res.data;
                 this.todo = res.data;
-                console.log(this.originalTodo);
+                this.lastId = this.originalTodo.length - 1;
+                // console.log(this.originalTodo);
+            }).catch((err)=>{
+                console.log(err)
             })
         },
         ToDoComplete(id) {
@@ -36,32 +46,36 @@ createApp({
             }
         },
         addItem() {
-            const newTask = {
-                id: null,
+            const task ={...this.newTask};
+            this.newTask= {
+                id: '',
                 text: this.newTodo,
-                done: false
+                done: null,
             };
-
-            let maxId = 0;
-            this.originalTodo.forEach((task) => {
-                if (task.id > maxId) {
-                    maxId = task.id;
-                }
-            });
-
-            newTask.id = maxId + 1;
-            this.newTodo = '';
-
-            if (newTask.text.length > 0) {
-                this.todo.push(newTask);
-                this.originalTodo.push(newTask);
+            // console.log(task);
+            this.lastId += 1;
+            task.id=this.lastId;
+            task.text=this.newTodo;
+            task.done=false;
+            // utilizzo il form data per inviare i valori a $_POST
+            const data = new FormData();
+            for (let key in task) {
+                data.append(key, task[key]);
             }
+            axios.post(this.apiUrl, data).then((res) => {
+                this.originalTodo = res.data
+                this.lastId = this.originalTodo.length - 1;
+                location.reload();
+            }).catch((err)=>{
+                console.log(err)
+            })
+            this.newTodo = '';
         },
         findTask() {
             this.originalTodo = this.todo.filter((task) => {
                 return task.text.toLowerCase().includes(this.searchQuery.toLowerCase())
             });
-            console.log(this.originalTodo);
+            // console.log(this.originalTodo);
         },
     },
     computed: {
